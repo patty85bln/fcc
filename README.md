@@ -1,1 +1,75 @@
-# fcc
+const url = `https://api.bitpanda.com/v1/ticker?`
+const req = new Request(url)
+const res = await req.loadJSON()
+const amount = res.ETH.EUR;
+const penis = res.XRP.EUR;
+const i = new Request('https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/512/Ethereum-ETH-icon.png')
+const img = await i.loadImage()
+const b = new Request('https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/512/Ethereum-ETH-icon.png')
+const bmg = await b.loadImage()
+
+let widget = createWidget(amount, penis, img, bmg)
+if (config.runsInWidget) {
+  // create and show widget
+  Script.setWidget(widget)
+  Script.complete()
+}
+else {
+  widget.presentSmall()
+}
+
+// Assemble widget layout 
+function createWidget(amount, penis, img, bmg) {
+  let w = new ListWidget()
+  w.backgroundColor = new Color("#1A1A1A")
+
+  let image = w.addImage(img + ' ' bmg)
+  image.imageSize = new Size(30, 30)
+  image.centerAlignImage()
+  
+
+  w.addSpacer(8)
+
+  let staticText = w.addText("ETH - Euro:")
+  staticText.textColor = Color.white()
+  staticText.font = Font.boldSystemFont(12)
+  staticText.centerAlignText()
+
+  w.addSpacer(8)
+
+  let amountTxt = w.addText(amount + ' ' )
+  amountTxt.textColor = Color.orange()
+  amountTxt.font = Font.systemFont(16)
+  amountTxt.centerAlignText()
+  
+  w.addSpacer(8)
+  
+  let doof = w.addText("XRP - Euro:")
+  doof.textColor = Color.white()
+  doof.font = Font.boldSystemFont(12)
+  doof.centerAlignText()
+
+w.addSpacer(8)
+
+  let penisTxt = w.addText(penis + ' ' )
+  penisTxt.textColor = Color.orange()
+  penisTxt.font = Font.systemFont(16)
+  penisTxt.centerAlignText()
+
+  //   let currencyTxt = w.addText(currency)
+  //   currencyTxt.textColor = Color.gray()
+  //   currencyTxt.font = Font.systemFont(10)
+  //   currencyTxt.centerAlignText()
+
+  w.addSpacer(8)
+
+  // Show current date in format Day. Month Year
+  let currentDate = new Date();
+  let lastDate = w.addDate(currentDate);
+  lastDate.textColor = Color.gray()
+  lastDate.font = Font.mediumSystemFont(10)
+  lastDate.centerAlignText();
+  
+  w.setPadding(0, 0, 0, 0)
+  return w
+}
